@@ -1,0 +1,9 @@
+azure-storage-blob
+boto3
+fastapi
+google-cloud-storage
+python-dotenv
+httpx
+python-multipart
+pydantic
+uvicorn
