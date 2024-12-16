@@ -1,0 +1,149 @@
+generator client {
+    provider             = "prisma-client-js"
+    interface            = "asyncio"
+    recursive_type_depth = 5
+    previewFeatures      = ["postgresqlExtensions"]
+}
+
+datasource db {
+    provider   = "postgresql"
+    url        = env("DATABASE_URL")
+    directUrl  = env("DATABASE_DIRECT_URL")
+    extensions = [pgcrypto]
+}
+
+model Attachment {
+    id        String   @id @default(dbgenerated("gen_random_uuid()"))
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now()) @updatedAt
+
+    threadId  String?
+    stepId    String
+    metadata  Json
+    mime      String?
+    name      String
+    objectKey String?
+    url       String?
+    step      Step    @relation(fields: [stepId], references: [id], onDelete: Cascade)
+    thread    Thread? @relation(fields: [threadId], references: [id], onDelete: Cascade)
+
+    // TODO: add back these
+    // chainlitKey", "display", "size", "language", "page",
+    // "autoPlay", "playerConfig"
+    @@index([stepId])
+    @@index([threadId])
+}
+
+model Participant {
+    id          String    @id @default(dbgenerated("gen_random_uuid()"))
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @default(now()) @updatedAt
+    metadata    Json
+    identifier  String
+    lastEngaged DateTime?
+    threads     Thread[]
+
+    @@index([identifier])
+}
+
+model Score {
+    id        String   @id @default(dbgenerated("gen_random_uuid()"))
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now()) @updatedAt
+
+    stepId String?
+    Step   Step?   @relation(fields: [stepId], references: [id])
+
+    type       ScoreType @default(HUMAN)
+    name       String
+    value      Float
+    valueLabel String?
+
+    comment String?
+    scorer  String?
+
+    @@index(createdAt)
+    @@index(name)
+    @@index(stepId)
+    @@index(value)
+    @@index([name, value])
+}
+
+model Step {
+    id        String   @id @default(dbgenerated("gen_random_uuid()"))
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now()) @updatedAt
+    parentId  String?
+    threadId  String?
+
+    input    Json?
+    metadata Json
+    name     String?
+    output   Json?
+    type     StepType
+
+    startTime DateTime
+    endTime   DateTime
+
+    attachments Attachment[]
+    // TODO: check removal
+    // parent      Step?        @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
+    // children    Step[]       @relation("ParentChild")
+    rootRunId   String?
+    rootRun     Step?        @relation("RootRun", fields: [rootRunId], references: [id], onDelete: Cascade)
+    runChildren Step[]       @relation("RootRun")
+    thread      Thread?      @relation(fields: [threadId], references: [id], onDelete: Cascade)
+    Score       Score[]
+
+    variables Json?
+    settings  Json?
+    tools     Json?
+
+    @@index([createdAt])
+    @@index([endTime])
+    @@index([parentId])
+    @@index([startTime])
+    @@index([rootRunId])
+    @@index([threadId])
+    @@index([type])
+    @@index([name])
+    @@index([threadId, startTime, endTime])
+}
+
+model Thread {
+    id        String    @id @default(dbgenerated("gen_random_uuid()"))
+    createdAt DateTime  @default(now())
+    updatedAt DateTime  @default(now()) @updatedAt
+    deletedAt DateTime?
+
+    name       String?
+    metadata   Json
+    tokenCount Int     @default(0)
+
+    attachments   Attachment[]
+    steps         Step[]
+    participantId String?
+    Participant   Participant? @relation(fields: [participantId], references: [id])
+
+    @@index([createdAt])
+    @@index([tokenCount])
+}
+
+enum StepType {
+    assistant_message
+    embedding
+    llm
+    retrieval
+    rerank
+    run
+    system_message
+    tool
+    undefined
+    user_message
+}
+
+enum ScoreType {
+    HUMAN
+    CODE
+    AI
+}
