@@ -17,5 +17,5 @@ services:
     ports:
       - 4566:4566
     volumes:
-      - ./docker/localstack-script.sh:/etc/localstack/init/ready.d/script.sh
+      - ./localstack-script.sh:/etc/localstack/init/ready.d/script.sh
       - "/var/run/docker.sock:/var/run/docker.sock"

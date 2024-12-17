@@ -8,7 +8,8 @@ generator client {
 datasource db {
     provider   = "postgresql"
     url        = env("DATABASE_URL")
-    directUrl  = env("DATABASE_DIRECT_URL")
+    // Prisma migrations run through the direct URL. Replace as needed.
+    directUrl  = env("DATABASE_URL")
     extensions = [pgcrypto]
 }
 
@@ -92,7 +93,7 @@ model Step {
     rootRunId   String?
     rootRun     Step?        @relation("RootRun", fields: [rootRunId], references: [id], onDelete: Cascade)
     runChildren Step[]       @relation("RootRun")
-    thread      Thread?      @relation(fields: [threadId], references: [id], onDelete: Cascade)
+    // thread      Thread?      @relation(fields: [threadId], references: [id], onDelete: Cascade)
     Score       Score[]
 
     variables Json?
@@ -121,7 +122,7 @@ model Thread {
     tokenCount Int     @default(0)
 
     attachments   Attachment[]
-    steps         Step[]
+    // steps         Step[]
     participantId String?
     Participant   Participant? @relation(fields: [participantId], references: [id])
 

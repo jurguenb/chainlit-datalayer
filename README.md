@@ -1,40 +1,43 @@
 # Chainlit datalayer
 
-Chainlit datalayer shows how to log conversations happening on your Chainlit application.
+Basic data layer for Chainlit apps. Schema description is in `prisma/schema.prisma`.
 
-## To use
+## Run services
 
-Simply run:
+Run:
 
 ```docker
 docker compose -f compose.yaml
 ```
 
-And add the following configurations to your Chainlit application:
+Two services are now up:
 
-```config.toml
+- a fresh PostgreSQL
+- a 'fake' S3 bucket - to simulate storage for attachments
+
+## Deploy schema to DB
+
+Run:
 
 ```
+npx prisma migrate deploy
+```
 
-## What is persisted ?
+## Use from Chainlit
 
-Thread, Step (all types), Score (feedback), Attachments.
+Add the following environment variables in `.env`:
 
-## To deploy
+```
+# To link to the PostgreSQL instance
+DATABASE_URL="postgresql+asyncpg://root:root@localhost:5432/postgres"
 
-Two infrastructure components make up the Chainlit datalayer:
+# To link to the S3 bucket
+BUCKET_NAME="my-bucket"
+APP_AWS_ACCESS_KEY="random-key"
+APP_AWS_SECRET_KEY="random-key"
+APP_AWS_REGION="eu-central-1"
+DEV_AWS_ENDPOINT="http://localhost:4566"
+```
 
-- a database:
-- an S3 for attachments
-
-Decisions:
-
-- use kysely or drizzle
-- no projects
-- no participant on Thread
-- allow attachments
-- no prompt
-- no pothos/kysely -> ORM chainlit side only
-
-- keep llm specific data?
-- completion is legacy -> drop
+For production, use robust passwords and point to your actual storage provider.
+See [supported list](https://docs.chainlit.io).

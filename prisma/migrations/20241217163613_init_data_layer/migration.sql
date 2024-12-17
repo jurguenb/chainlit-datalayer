@@ -157,7 +157,4 @@ ALTER TABLE "Score" ADD CONSTRAINT "Score_stepId_fkey" FOREIGN KEY ("stepId") RE
 ALTER TABLE "Step" ADD CONSTRAINT "Step_rootRunId_fkey" FOREIGN KEY ("rootRunId") REFERENCES "Step"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Step" ADD CONSTRAINT "Step_threadId_fkey" FOREIGN KEY ("threadId") REFERENCES "Thread"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "Thread" ADD CONSTRAINT "Thread_participantId_fkey" FOREIGN KEY ("participantId") REFERENCES "Participant"("id") ON DELETE SET NULL ON UPDATE CASCADE;
