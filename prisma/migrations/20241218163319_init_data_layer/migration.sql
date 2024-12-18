@@ -4,11 +4,8 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 -- CreateEnum
 CREATE TYPE "StepType" AS ENUM ('assistant_message', 'embedding', 'llm', 'retrieval', 'rerank', 'run', 'system_message', 'tool', 'undefined', 'user_message');
 
--- CreateEnum
-CREATE TYPE "ScoreType" AS ENUM ('HUMAN', 'CODE', 'AI');
-
 -- CreateTable
-CREATE TABLE "Attachment" (
+CREATE TABLE "Element" (
     "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -19,12 +16,17 @@ CREATE TABLE "Attachment" (
     "name" TEXT NOT NULL,
     "objectKey" TEXT,
     "url" TEXT,
+    "chainlitKey" TEXT,
+    "display" TEXT,
+    "size" TEXT,
+    "language" TEXT,
+    "page" INTEGER,
 
-    CONSTRAINT "Attachment_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Element_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Participant" (
+CREATE TABLE "User" (
     "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -32,23 +34,22 @@ CREATE TABLE "Participant" (
     "identifier" TEXT NOT NULL,
     "lastEngaged" TIMESTAMP(3),
 
-    CONSTRAINT "Participant_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Score" (
+CREATE TABLE "Feedback" (
     "id" TEXT NOT NULL DEFAULT gen_random_uuid(),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "stepId" TEXT,
-    "type" "ScoreType" NOT NULL DEFAULT 'HUMAN',
     "name" TEXT NOT NULL,
     "value" DOUBLE PRECISION NOT NULL,
     "valueLabel" TEXT,
     "comment" TEXT,
     "scorer" TEXT,
 
-    CONSTRAINT "Score_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Feedback_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -82,34 +83,34 @@ CREATE TABLE "Thread" (
     "name" TEXT,
     "metadata" JSONB NOT NULL,
     "tokenCount" INTEGER NOT NULL DEFAULT 0,
-    "participantId" TEXT,
+    "userId" TEXT,
 
     CONSTRAINT "Thread_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
-CREATE INDEX "Attachment_stepId_idx" ON "Attachment"("stepId");
+CREATE INDEX "Element_stepId_idx" ON "Element"("stepId");
 
 -- CreateIndex
-CREATE INDEX "Attachment_threadId_idx" ON "Attachment"("threadId");
+CREATE INDEX "Element_threadId_idx" ON "Element"("threadId");
 
 -- CreateIndex
-CREATE INDEX "Participant_identifier_idx" ON "Participant"("identifier");
+CREATE INDEX "User_identifier_idx" ON "User"("identifier");
 
 -- CreateIndex
-CREATE INDEX "Score_createdAt_idx" ON "Score"("createdAt");
+CREATE INDEX "Feedback_createdAt_idx" ON "Feedback"("createdAt");
 
 -- CreateIndex
-CREATE INDEX "Score_name_idx" ON "Score"("name");
+CREATE INDEX "Feedback_name_idx" ON "Feedback"("name");
 
 -- CreateIndex
-CREATE INDEX "Score_stepId_idx" ON "Score"("stepId");
+CREATE INDEX "Feedback_stepId_idx" ON "Feedback"("stepId");
 
 -- CreateIndex
-CREATE INDEX "Score_value_idx" ON "Score"("value");
+CREATE INDEX "Feedback_value_idx" ON "Feedback"("value");
 
 -- CreateIndex
-CREATE INDEX "Score_name_value_idx" ON "Score"("name", "value");
+CREATE INDEX "Feedback_name_value_idx" ON "Feedback"("name", "value");
 
 -- CreateIndex
 CREATE INDEX "Step_createdAt_idx" ON "Step"("createdAt");
@@ -145,13 +146,13 @@ CREATE INDEX "Thread_createdAt_idx" ON "Thread"("createdAt");
 CREATE INDEX "Thread_tokenCount_idx" ON "Thread"("tokenCount");
 
 -- AddForeignKey
-ALTER TABLE "Attachment" ADD CONSTRAINT "Attachment_stepId_fkey" FOREIGN KEY ("stepId") REFERENCES "Step"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Element" ADD CONSTRAINT "Element_stepId_fkey" FOREIGN KEY ("stepId") REFERENCES "Step"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Attachment" ADD CONSTRAINT "Attachment_threadId_fkey" FOREIGN KEY ("threadId") REFERENCES "Thread"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "Element" ADD CONSTRAINT "Element_threadId_fkey" FOREIGN KEY ("threadId") REFERENCES "Thread"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Score" ADD CONSTRAINT "Score_stepId_fkey" FOREIGN KEY ("stepId") REFERENCES "Step"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Feedback" ADD CONSTRAINT "Feedback_stepId_fkey" FOREIGN KEY ("stepId") REFERENCES "Step"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Step" ADD CONSTRAINT "Step_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "Step"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -163,4 +164,4 @@ ALTER TABLE "Step" ADD CONSTRAINT "Step_rootRunId_fkey" FOREIGN KEY ("rootRunId"
 ALTER TABLE "Step" ADD CONSTRAINT "Step_threadId_fkey" FOREIGN KEY ("threadId") REFERENCES "Thread"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Thread" ADD CONSTRAINT "Thread_participantId_fkey" FOREIGN KEY ("participantId") REFERENCES "Participant"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Thread" ADD CONSTRAINT "Thread_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;

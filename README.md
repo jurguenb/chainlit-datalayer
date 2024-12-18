@@ -1,6 +1,6 @@
 # Chainlit datalayer
 
-Basic data layer for Chainlit apps. Schema description is in `prisma/schema.prisma`.
+PostgresSQL data layer for chainlit apps. Schema description is in `prisma/schema.prisma`.
 
 ## Demo
 
@@ -44,6 +44,10 @@ DEV_AWS_ENDPOINT="http://localhost:4566"
 ```
 
 For production, use robust passwords and point to your actual storage provider.
-See [supported list](https://docs.chainlit.io).
+See [supported list](https://docs.chainlit.io). # TODO: adjust documentation
 
 To view your data, use `npx prisma studio`.
+
+## Section about actual deployment
+
+TODO: Give example GCS.
