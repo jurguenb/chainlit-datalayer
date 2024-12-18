@@ -87,13 +87,12 @@ model Step {
     endTime   DateTime
 
     attachments Attachment[]
-    // TODO: check removal
-    // parent      Step?        @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
-    // children    Step[]       @relation("ParentChild")
+    parent      Step?        @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
+    children    Step[]       @relation("ParentChild")
     rootRunId   String?
     rootRun     Step?        @relation("RootRun", fields: [rootRunId], references: [id], onDelete: Cascade)
     runChildren Step[]       @relation("RootRun")
-    // thread      Thread?      @relation(fields: [threadId], references: [id], onDelete: Cascade)
+    thread      Thread?      @relation(fields: [threadId], references: [id], onDelete: Cascade)
     Score       Score[]
 
     variables Json?
@@ -122,9 +121,9 @@ model Thread {
     tokenCount Int     @default(0)
 
     attachments   Attachment[]
-    // steps         Step[]
     participantId String?
     Participant   Participant? @relation(fields: [participantId], references: [id])
+    steps         Step[]
 
     @@index([createdAt])
     @@index([tokenCount])

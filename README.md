@@ -41,3 +41,5 @@ DEV_AWS_ENDPOINT="http://localhost:4566"
 
 For production, use robust passwords and point to your actual storage provider.
 See [supported list](https://docs.chainlit.io).
+
+To view your data, use `npx prisma studio`.
