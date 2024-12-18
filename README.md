@@ -2,6 +2,10 @@
 
 Basic data layer for Chainlit apps. Schema description is in `prisma/schema.prisma`.
 
+## Demo
+
+[Data layer demo](./demo.gif)
+
 ## Run services
 
 Run:
