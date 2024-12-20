@@ -9,6 +9,18 @@ Option to upload elements to cloud storage.
 
 ## Try it locally
 
+### Install dependencies
+
+```
+# For the database.
+pip install asyncpg SQLAlchemy
+
+# For cloud providers
+pip install boto3                   # AWS S3
+pip install azure-storage-blob      # Azure
+pip install google-cloud-storage    # Google Cloud
+```
+
 ### Run services
 
 Run:
