@@ -13,7 +13,7 @@ Option to upload elements to cloud storage.
 
 ```
 # For the database.
-pip install asyncpg SQLAlchemy
+pip install asyncpg SQLAlchemy aiohttp
 
 # For cloud providers
 pip install boto3                   # AWS S3
