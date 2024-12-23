@@ -33,6 +33,7 @@ model Element {
     size        String?
     language    String?
     page        Int?
+
     @@index([stepId])
     @@index([threadId])
 }
@@ -127,6 +128,7 @@ model Thread {
     steps         Step[]
 
     @@index([createdAt])
+    @@index([name])
     @@index([tokenCount])
 }
 
