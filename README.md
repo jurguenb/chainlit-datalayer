@@ -13,7 +13,7 @@ Option to upload elements to cloud storage.
 
 ```
 # For the database.
-pip install asyncpg SQLAlchemy aiohttp
+pip install asyncpg aiohttp
 
 # For cloud providers
 pip install boto3                   # AWS S3
@@ -47,7 +47,7 @@ Now, all tables are created and welcoming chat data!
 Add the following environment variables in `.env`:
 ```
 # To link to the PostgreSQL instance.
-DATABASE_URL="postgresql+asyncpg://root:root@localhost:5432/postgres"
+DATABASE_URL="postgresql://root:root@localhost:5432/postgres"
 ```
 
 Upon running `chainlit run app.py`, Chainlit attempts to connect to the 
