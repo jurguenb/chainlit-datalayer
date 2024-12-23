@@ -5,7 +5,7 @@ Option to upload elements to cloud storage.
 
 ## Demo
 
-![Data layer demo](./demo.gif) # TODO: update
+![Data layer demo](./demo.gif)
 
 ## Try it locally
 
@@ -112,4 +112,10 @@ APP_GCS_PRIVATE_KEY="ABC...123...XYZ"
 
 ### Azure Blob Storage
 
-??
+We are open to examples showcasing Azure Blob Storage for elements, either actual or those
+leveraging tools such as `azurite` for local testing. 
+
+```
+APP_AZURE_STORAGE_ACCOUNT=
+APP_AZURE_STORAGE_ACCESS_KEY=
+```
