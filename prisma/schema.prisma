@@ -43,10 +43,10 @@ model User {
     updatedAt   DateTime  @default(now()) @updatedAt
     metadata    Json
     identifier  String
-    lastEngaged DateTime?
     threads     Thread[]
-
+    
     @@index([identifier])
+    @@unique([identifier])
 }
 
 model Feedback {

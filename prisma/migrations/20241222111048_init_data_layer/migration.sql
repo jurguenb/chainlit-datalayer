@@ -32,7 +32,6 @@ CREATE TABLE "User" (
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "metadata" JSONB NOT NULL,
     "identifier" TEXT NOT NULL,
-    "lastEngaged" TIMESTAMP(3),
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -96,6 +95,9 @@ CREATE INDEX "Element_threadId_idx" ON "Element"("threadId");
 
 -- CreateIndex
 CREATE INDEX "User_identifier_idx" ON "User"("identifier");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_identifier_key" ON "User"("identifier");
 
 -- CreateIndex
 CREATE INDEX "Feedback_createdAt_idx" ON "Feedback"("createdAt");
