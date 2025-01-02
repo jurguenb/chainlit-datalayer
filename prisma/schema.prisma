@@ -33,6 +33,7 @@ model Element {
     size        String?
     language    String?
     page        Int?
+    props       Json?
 
     @@index([stepId])
     @@index([threadId])
@@ -79,11 +80,13 @@ model Step {
     parentId  String?
     threadId  String?
 
-    input    Json?
+    input    String?
     metadata Json
     name     String?
-    output   Json?
-    type     StepType
+    output   String?
+    type      StepType
+    showInput String? @default("json")
+    isError   Boolean? @default(false)
 
     startTime DateTime
     endTime   DateTime
@@ -96,10 +99,6 @@ model Step {
     runChildren Step[]       @relation("RootRun")
     thread      Thread?      @relation(fields: [threadId], references: [id], onDelete: Cascade)
     Feedback       Feedback[]
-
-    variables Json?
-    settings  Json?
-    tools     Json?
 
     @@index([createdAt])
     @@index([endTime])

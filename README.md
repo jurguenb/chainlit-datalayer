@@ -1,7 +1,8 @@
 # Chainlit datalayer
 
-PostgresSQL data layer for Chainlit apps. Schema description is in `prisma/schema.prisma`. 
-Option to upload elements to cloud storage.
+PostgresSQL data layer for Chainlit apps
+- Schema description is in `prisma/schema.prisma`
+- Option to upload elements to cloud storage
 
 ## Demo
 
@@ -31,14 +32,14 @@ cp .env.example .env
 Run:
 
 ```docker
-docker compose -f compose.yaml
+docker compose up -d
 ```
 
 Two services are now up:
 - a fresh (empty) PostgreSQL
 - a 'fake' S3 bucket - to simulate storage for elements
 
-We create table and "imprint" our Prisma schema to the fresh PostgreSQL:
+We now "imprint" our Prisma schema to the fresh PostgreSQL:
 ```
 npx prisma migrate deploy
 ```

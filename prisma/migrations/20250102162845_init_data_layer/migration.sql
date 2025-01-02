@@ -21,6 +21,7 @@ CREATE TABLE "Element" (
     "size" TEXT,
     "language" TEXT,
     "page" INTEGER,
+    "props" JSONB,
 
     CONSTRAINT "Element_pkey" PRIMARY KEY ("id")
 );
@@ -58,17 +59,16 @@ CREATE TABLE "Step" (
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "parentId" TEXT,
     "threadId" TEXT,
-    "input" JSONB,
+    "input" TEXT,
     "metadata" JSONB NOT NULL,
     "name" TEXT,
-    "output" JSONB,
+    "output" TEXT,
     "type" "StepType" NOT NULL,
+    "showInput" TEXT DEFAULT 'json',
+    "isError" BOOLEAN DEFAULT false,
     "startTime" TIMESTAMP(3) NOT NULL,
     "endTime" TIMESTAMP(3) NOT NULL,
     "rootRunId" TEXT,
-    "variables" JSONB,
-    "settings" JSONB,
-    "tools" JSONB,
 
     CONSTRAINT "Step_pkey" PRIMARY KEY ("id")
 );
@@ -143,6 +143,9 @@ CREATE INDEX "Step_threadId_startTime_endTime_idx" ON "Step"("threadId", "startT
 
 -- CreateIndex
 CREATE INDEX "Thread_createdAt_idx" ON "Thread"("createdAt");
+
+-- CreateIndex
+CREATE INDEX "Thread_name_idx" ON "Thread"("name");
 
 -- CreateIndex
 CREATE INDEX "Thread_tokenCount_idx" ON "Thread"("tokenCount");
