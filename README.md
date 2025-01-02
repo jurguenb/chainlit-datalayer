@@ -21,6 +21,11 @@ pip install azure-storage-blob      # Azure
 pip install google-cloud-storage    # Google Cloud
 ```
 
+Copy environment variables:
+```
+cp .env.example .env
+```
+
 ### Run services
 
 Run:
