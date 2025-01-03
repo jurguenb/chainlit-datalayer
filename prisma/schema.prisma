@@ -61,10 +61,8 @@ model Feedback {
 
     name       String
     value      Float
-    valueLabel String?
 
     comment String?
-    scorer  String?
 
     @@index(createdAt)
     @@index(name)
@@ -94,9 +92,6 @@ model Step {
     elements Element[]
     parent      Step?        @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
     children    Step[]       @relation("ParentChild")
-    rootRunId   String?
-    rootRun     Step?        @relation("RootRun", fields: [rootRunId], references: [id], onDelete: Cascade)
-    runChildren Step[]       @relation("RootRun")
     thread      Thread?      @relation(fields: [threadId], references: [id], onDelete: Cascade)
     Feedback       Feedback[]
 
@@ -104,7 +99,6 @@ model Step {
     @@index([endTime])
     @@index([parentId])
     @@index([startTime])
-    @@index([rootRunId])
     @@index([threadId])
     @@index([type])
     @@index([name])

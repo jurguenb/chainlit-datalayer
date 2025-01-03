@@ -45,9 +45,7 @@ CREATE TABLE "Feedback" (
     "stepId" TEXT,
     "name" TEXT NOT NULL,
     "value" DOUBLE PRECISION NOT NULL,
-    "valueLabel" TEXT,
     "comment" TEXT,
-    "scorer" TEXT,
 
     CONSTRAINT "Feedback_pkey" PRIMARY KEY ("id")
 );
@@ -68,7 +66,6 @@ CREATE TABLE "Step" (
     "isError" BOOLEAN DEFAULT false,
     "startTime" TIMESTAMP(3) NOT NULL,
     "endTime" TIMESTAMP(3) NOT NULL,
-    "rootRunId" TEXT,
 
     CONSTRAINT "Step_pkey" PRIMARY KEY ("id")
 );
@@ -126,9 +123,6 @@ CREATE INDEX "Step_parentId_idx" ON "Step"("parentId");
 CREATE INDEX "Step_startTime_idx" ON "Step"("startTime");
 
 -- CreateIndex
-CREATE INDEX "Step_rootRunId_idx" ON "Step"("rootRunId");
-
--- CreateIndex
 CREATE INDEX "Step_threadId_idx" ON "Step"("threadId");
 
 -- CreateIndex
@@ -157,9 +151,6 @@ ALTER TABLE "Feedback" ADD CONSTRAINT "Feedback_stepId_fkey" FOREIGN KEY ("stepI
 
 -- AddForeignKey
 ALTER TABLE "Step" ADD CONSTRAINT "Step_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "Step"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Step" ADD CONSTRAINT "Step_rootRunId_fkey" FOREIGN KEY ("rootRunId") REFERENCES "Step"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Step" ADD CONSTRAINT "Step_threadId_fkey" FOREIGN KEY ("threadId") REFERENCES "Thread"("id") ON DELETE CASCADE ON UPDATE CASCADE;
