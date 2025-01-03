@@ -14,7 +14,7 @@ PostgresSQL data layer for Chainlit apps
 
 ```
 # For the database.
-pip install asyncpg aiohttp
+pip install asyncpg
 
 # For cloud providers
 pip install boto3                   # AWS S3
@@ -68,9 +68,8 @@ Locally, we have a fake S3 running up, which you can connect to with the followi
 `.env` configuration:
 
 ```
-BUCKET_NAME="my-bucket"
-
 # S3 configuration.
+BUCKET_NAME="my-bucket"
 APP_AWS_ACCESS_KEY="random-key"
 APP_AWS_SECRET_KEY="random-key"
 APP_AWS_REGION="eu-central-1"
@@ -85,21 +84,22 @@ http://localhost:4566/my-bucket to list your attachments.
 In production, deploy a production database -- please use robust passwords --
 and point to an actual cloud provider. 
 
-Chainlit supports three cloud providers, see below for `.env` example
+Chainlit supports the three major cloud providers, see below for `.env` example
 configurations.
 
 ### AWS S3
 
 ```
+BUCKET_NAME="my-bucket"
 APP_AWS_ACCESS_KEY="random-key"
 APP_AWS_SECRET_KEY="random-key"
 APP_AWS_REGION="eu-central-1"
-DEV_AWS_ENDPOINT="http://localhost:4566"
 ```
 
 ### Google Cloud Storage (GCS)
 
 With Google Cloud, the following environment variables are necessary to connect:
+- `BUCKET_NAME`: GCS bucket name
 - `APP_GCS_PROJECT_ID`: project ID (not the project number)
 - `APP_GCS_CLIENT_EMAIL`: email of the service account with adequate permissions 
 - `APP_GCS_PRIVATE_KEY`: secret key to authenticate
@@ -111,6 +111,7 @@ details page.
 
 Here's an example of what your configuration could look like:
 ```
+BUCKET_NAME="my-test-bucket"
 APP_GCS_PROJECT_ID="chat-project-123456"
 APP_GCS_CLIENT_EMAIL="chat-project-bucket@chat-project-123456.iam.gserviceaccount.com"
 APP_GCS_PRIVATE_KEY="ABC...123...XYZ"
@@ -118,10 +119,8 @@ APP_GCS_PRIVATE_KEY="ABC...123...XYZ"
 
 ### Azure Blob Storage
 
-We are open to examples showcasing Azure Blob Storage for elements, either actual or those
-leveraging tools such as `azurite` for local testing. 
-
 ```
-APP_AZURE_STORAGE_ACCOUNT=
-APP_AZURE_STORAGE_ACCESS_KEY=
+BUCKET_NAME= # should be the container name in Azure terminology.
+APP_AZURE_STORAGE_ACCOUNT=dev-store-account-xyz
+APP_AZURE_STORAGE_ACCESS_KEY=F9xkw3NOs...
 ```

@@ -81,7 +81,6 @@ CREATE TABLE "Thread" (
     "deletedAt" TIMESTAMP(3),
     "name" TEXT,
     "metadata" JSONB NOT NULL,
-    "tokenCount" INTEGER NOT NULL DEFAULT 0,
     "userId" TEXT,
 
     CONSTRAINT "Thread_pkey" PRIMARY KEY ("id")
@@ -146,9 +145,6 @@ CREATE INDEX "Thread_createdAt_idx" ON "Thread"("createdAt");
 
 -- CreateIndex
 CREATE INDEX "Thread_name_idx" ON "Thread"("name");
-
--- CreateIndex
-CREATE INDEX "Thread_tokenCount_idx" ON "Thread"("tokenCount");
 
 -- AddForeignKey
 ALTER TABLE "Element" ADD CONSTRAINT "Element_stepId_fkey" FOREIGN KEY ("stepId") REFERENCES "Step"("id") ON DELETE CASCADE ON UPDATE CASCADE;

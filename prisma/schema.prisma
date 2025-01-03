@@ -119,7 +119,6 @@ model Thread {
 
     name       String?
     metadata   Json
-    tokenCount Int     @default(0)
 
     elements   Element[]
     userId String?
@@ -128,7 +127,6 @@ model Thread {
 
     @@index([createdAt])
     @@index([name])
-    @@index([tokenCount])
 }
 
 enum StepType {
