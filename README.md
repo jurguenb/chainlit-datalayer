@@ -4,6 +4,8 @@ PostgresSQL data layer for Chainlit apps
 - Schema description is in `prisma/schema.prisma`
 - Option to upload elements to cloud storage
 
+Requires chainlit >= `2.0.0`.
+
 ## Demo
 
 ![Data layer demo](./demo.gif)
@@ -59,9 +61,7 @@ DATABASE_URL="postgresql://root:root@localhost:5432/postgres"
 Upon running `chainlit run app.py`, Chainlit attempts to connect to the 
 specified database and keeps track of threads, users, steps, elements, feedback. 
 
-Remember to activate:
-- user authentication: https://docs.chainlit.io/authentication/overview
-- chat history: https://docs.chainlit.io/data-persistence/history#chat-history
+Remember to activate user authentication: https://docs.chainlit.io/authentication/overview
 
 Elements -- that is files attached in the chat -- are written to a cloud storage. 
 Locally, we have a fake S3 running up, which you can connect to with the following
