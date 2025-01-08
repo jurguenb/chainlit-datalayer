@@ -40,15 +40,15 @@ model Element {
 }
 
 model User {
-    id          String    @id @default(dbgenerated("gen_random_uuid()"))
-    createdAt   DateTime  @default(now())
-    updatedAt   DateTime  @default(now()) @updatedAt
-    metadata    Json
-    identifier  String
-    threads     Thread[]
-    
-    @@index([identifier])
+    id         String   @id @default(dbgenerated("gen_random_uuid()"))
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @default(now()) @updatedAt
+    metadata   Json
+    identifier String
+    threads    Thread[]
+
     @@unique([identifier])
+    @@index([identifier])
 }
 
 model Feedback {
@@ -59,8 +59,8 @@ model Feedback {
     stepId String?
     Step   Step?   @relation(fields: [stepId], references: [id])
 
-    name       String
-    value      Float
+    name  String
+    value Float
 
     comment String?
 
@@ -78,22 +78,22 @@ model Step {
     parentId  String?
     threadId  String?
 
-    input    String?
-    metadata Json
-    name     String?
-    output   String?
+    input     String?
+    metadata  Json
+    name      String?
+    output    String?
     type      StepType
-    showInput String? @default("json")
+    showInput String?  @default("json")
     isError   Boolean? @default(false)
 
     startTime DateTime
     endTime   DateTime
 
     elements Element[]
-    parent      Step?        @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
-    children    Step[]       @relation("ParentChild")
-    thread      Thread?      @relation(fields: [threadId], references: [id], onDelete: Cascade)
-    Feedback       Feedback[]
+    parent   Step?      @relation("ParentChild", fields: [parentId], references: [id], onDelete: Cascade)
+    children Step[]     @relation("ParentChild")
+    thread   Thread?    @relation(fields: [threadId], references: [id], onDelete: Cascade)
+    Feedback Feedback[]
 
     @@index([createdAt])
     @@index([endTime])
@@ -111,13 +111,14 @@ model Thread {
     updatedAt DateTime  @default(now()) @updatedAt
     deletedAt DateTime?
 
-    name       String?
-    metadata   Json
+    name     String?
+    metadata Json
+    tags     String[] @default([])
 
-    elements   Element[]
-    userId String?
-    User   User? @relation(fields: [userId], references: [id])
-    steps         Step[]
+    elements Element[]
+    userId   String?
+    User     User?     @relation(fields: [userId], references: [id])
+    steps    Step[]
 
     @@index([createdAt])
     @@index([name])
