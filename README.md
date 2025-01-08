@@ -55,7 +55,7 @@ Now, all tables are created and welcoming chat data!
 Add the following environment variables in `.env`:
 ```
 # To link to the PostgreSQL instance.
-DATABASE_URL="postgresql://root:root@localhost:5432/postgres"
+DATABASE_URL=postgresql://root:root@localhost:5432/postgres
 ```
 
 Upon running `chainlit run app.py`, Chainlit attempts to connect to the 
@@ -69,11 +69,11 @@ Locally, we have a fake S3 running up, which you can connect to with the followi
 
 ```
 # S3 configuration.
-BUCKET_NAME="my-bucket"
-APP_AWS_ACCESS_KEY="random-key"
-APP_AWS_SECRET_KEY="random-key"
-APP_AWS_REGION="eu-central-1"
-DEV_AWS_ENDPOINT="http://localhost:4566"
+BUCKET_NAME=my-bucket
+APP_AWS_ACCESS_KEY=random-key
+APP_AWS_SECRET_KEY=random-key
+APP_AWS_REGION=eu-central-1
+DEV_AWS_ENDPOINT=http://localhost:4566
 ```
 
 Re-launch your Chainlit app and add files to your chat. Then browse to 
@@ -90,10 +90,10 @@ configurations.
 ### AWS S3
 
 ```
-BUCKET_NAME="my-bucket"
-APP_AWS_ACCESS_KEY="random-key"
-APP_AWS_SECRET_KEY="random-key"
-APP_AWS_REGION="eu-central-1"
+BUCKET_NAME=my-bucket
+APP_AWS_ACCESS_KEY=random-key
+APP_AWS_SECRET_KEY=random-key
+APP_AWS_REGION=eu-central-1
 ```
 
 ### Google Cloud Storage (GCS)
@@ -111,10 +111,10 @@ details page.
 
 Here's an example of what your configuration could look like:
 ```
-BUCKET_NAME="my-test-bucket"
-APP_GCS_PROJECT_ID="chat-project-123456"
-APP_GCS_CLIENT_EMAIL="chat-project-bucket@chat-project-123456.iam.gserviceaccount.com"
-APP_GCS_PRIVATE_KEY="ABC...123...XYZ"
+BUCKET_NAME=my-test-bucket
+APP_GCS_PROJECT_ID=chat-project-123456
+APP_GCS_CLIENT_EMAIL=chat-project-bucket@chat-project-123456.iam.gserviceaccount.com
+APP_GCS_PRIVATE_KEY=ABC...123...XYZ
 ```
 
 ### Azure Blob Storage
