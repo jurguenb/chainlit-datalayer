@@ -4,7 +4,7 @@ PostgresSQL data layer for Chainlit apps
 - Schema description is in `prisma/schema.prisma`
 - Option to upload elements to cloud storage
 
-Requires chainlit >= `2.0.0`.
+Works with chainlit >= `2.0.0`.
 
 ## Demo
 
