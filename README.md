@@ -6,9 +6,11 @@ PostgresSQL data layer for Chainlit apps
 
 Works with chainlit >= `2.0.0`.
 
-## Demo
+## Demo app
 
-![Data layer demo](./demo.gif)
+Here is an example on how to set up the data layer with a basic example in `demo_app/`:
+
+https://github.com/user-attachments/assets/a867d470-ccf8-4a6b-8a7d-2b217382a3ed
 
 ## Try it locally
 
