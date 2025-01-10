@@ -21,15 +21,20 @@ https://github.com/user-attachments/assets/a867d470-ccf8-4a6b-8a7d-2b217382a3ed
 pip install asyncpg
 
 # For cloud providers
-pip install boto3                   # AWS S3
-pip install azure-storage-blob      # Azure
-pip install google-cloud-storage    # Google Cloud
+pip install boto3                       # AWS S3
+pip install azure-storage-blob aiohttp  # Azure
+pip install google-cloud-storage        # Google Cloud
 ```
 
 Copy environment variables:
 ```
 cp .env.example .env
 ```
+
+If you want to test Azure Blob Storage locally, uncomment the corresponding section in `compose.yaml` and
+run `python init_azure_storage.py` to initialize the container. 
+You will have to temporarily change the `AzureBlobStorageClient` class in chainlit repository to use the `http`
+protocol and an adjusted blob endpoint (without the typical Microsoft extension).
 
 ### Run services
 
@@ -76,6 +81,13 @@ APP_AWS_ACCESS_KEY=random-key
 APP_AWS_SECRET_KEY=random-key
 APP_AWS_REGION=eu-central-1
 DEV_AWS_ENDPOINT=http://localhost:4566
+
+# Azure Blob Storage configuration.
+BUCKET_NAME=my-container
+APP_AZURE_STORAGE_ACCOUNT=devstoreaccount1
+APP_AZURE_STORAGE_ACCESS_KEY=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==
+APP_AZURE_STORAGE_CONNECTION_STRING=DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://localhost:10000/devstoreaccount1;QueueEndpoint=http://localhost:10001/devstoreaccount1;TableEndpoint=http://localhost:10002/devstoreaccount1
+DEV_AZURE_BLOB_ENDPOINT=http://localhost:10000/devstoreaccount1
 ```
 
 Re-launch your Chainlit app and add files to your chat. Then browse to 
