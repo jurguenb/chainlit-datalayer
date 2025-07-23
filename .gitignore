@@ -1,8 +1,10 @@
 # Env vars.
 .env
+**/.env
 
 # Where we store PostgreSQL data.
 .data
 
 # Node modules.
 node_modules/
+.venv
