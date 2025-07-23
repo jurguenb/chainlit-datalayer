@@ -8,6 +8,10 @@ def auth_callback(username: str, password: str):
         return cl.User(
             identifier="admin", metadata={"role": "admin", "provider": "credentials"}
         )
+    elif (username, password) == ("jurguen", "jurguen"):
+        return cl.User(
+            identifier="jurguen", metadata={"role": "user", "provider": "credentials"}
+        )
     else:
         return None
 
